@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   # ==========================================
@@ -28,53 +27,51 @@ services:
       retries: 5
 
   # ==========================================
-  # BACKEND - Node.js + Express API
+  # BACKEND - Comentado temporalmente
   # ==========================================
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: attendance_backend
-    restart: unless-stopped
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres123}@db:5432/${POSTGRES_DB:-attendance_db}
-      NODE_ENV: ${NODE_ENV:-development}
-      PORT: ${PORT:-5000}
-    ports:
-      - "5000:5000"
-    volumes:
-      # Montamos el código para hot-reload en desarrollo
-      - ./backend:/app
-      - /app/node_modules
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - attendance_network
-    command: npm run dev
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: attendance_backend
+  #   restart: unless-stopped
+  #   environment:
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres123}@db:5432/${POSTGRES_DB:-attendance_db}
+  #     NODE_ENV: ${NODE_ENV:-development}
+  #     PORT: ${PORT:-5000}
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - ./backend:/app
+  #     - /app/node_modules
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   networks:
+  #     - attendance_network
+  #   command: npm run dev
 
   # ==========================================
-  # FRONTEND - React + Vite
+  # FRONTEND - Comentado temporalmente
   # ==========================================
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: attendance_frontend
-    restart: unless-stopped
-    environment:
-      VITE_API_URL: ${VITE_API_URL:-http://localhost:5000}
-    ports:
-      - "3000:3000"
-    volumes:
-      # Montamos el código para hot-reload en desarrollo
-      - ./frontend:/app
-      - /app/node_modules
-    depends_on:
-      - backend
-    networks:
-      - attendance_network
-    command: npm run dev
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: attendance_frontend
+  #   restart: unless-stopped
+  #   environment:
+  #     VITE_API_URL: ${VITE_API_URL:-http://localhost:5000}
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - attendance_network
+  #   command: npm run dev
 
 # ==========================================
 # VOLUMES - Persistencia de datos
