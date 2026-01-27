@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Grade {
+  id           Int       @id @default(autoincrement())
+  code         String    @unique @db.VarChar(20)
+  name         String    @db.VarChar(50)
+  displayOrder Int       @unique @map("display_order")
+  description  String?
+  active       Boolean?  @default(true)
+  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  students     Student[]
+
+  @@index([active], map: "idx_grades_active")
+  @@index([displayOrder], map: "idx_grades_display_order")
+  @@map("grades")
+}
+
+model Student {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(255)
+  gradeId     Int          @map("grade_id")
+  active      Boolean?     @default(true)
+  createdAt   DateTime?    @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime?    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  attendances Attendance[]
+  grade       Grade        @relation(fields: [gradeId], references: [id], onUpdate: NoAction)
+
+  @@index([active], map: "idx_students_active")
+  @@index([gradeId], map: "idx_students_grade_id")
+  @@map("students")
+}
+
+model Attendance {
+  id         Int       @id @default(autoincrement())
+  studentId  Int       @map("student_id")
+  date       DateTime  @db.Date
+  status     String    @db.VarChar(20)
+  notes      String?
+  recordedAt DateTime? @default(now()) @map("recorded_at") @db.Timestamp(6)
+  updatedAt  DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  student    Student   @relation(fields: [studentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([studentId, date])
+  @@index([date], map: "idx_attendances_date")
+  @@index([status], map: "idx_attendances_status")
+  @@index([studentId, date], map: "idx_attendances_student_date")
+  @@index([studentId], map: "idx_attendances_student_id")
+  @@map("attendances")
+}
