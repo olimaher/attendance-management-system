@@ -27,7 +27,7 @@ services:
       retries: 5
 
   # ==========================================
-  # BACKEND - Comentado temporalmente
+  # BACKEND - 
   # ==========================================
   backend:
     build:
@@ -52,26 +52,26 @@ services:
     command: npm run dev
 
   # ==========================================
-  # FRONTEND - Comentado temporalmente
+  # FRONTEND 
   # ==========================================
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   container_name: attendance_frontend
-  #   restart: unless-stopped
-  #   environment:
-  #     VITE_API_URL: ${VITE_API_URL:-http://localhost:5000}
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - attendance_network
-  #   command: npm run dev
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: attendance_frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://backend:5000/api}
+    ports:
+      - "3000:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - attendance_network
+    command: npm run dev -- --host 0.0.0.0
 
 # ==========================================
 # VOLUMES - Persistencia de datos

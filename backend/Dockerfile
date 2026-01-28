@@ -1,5 +1,5 @@
 # Usar Debian (más compatible, usado en producción)
-FROM node:18
+FROM node:20
 
 # Directorio de trabajo
 WORKDIR /app
