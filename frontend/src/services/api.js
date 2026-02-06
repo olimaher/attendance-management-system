@@ -47,10 +47,17 @@ export const studentService = {
 export const attendanceService = {
   getAll: () => api.get('/attendances'),
   getByDate: (date) => api.get(`/attendances/date/${date}`),
-  getByStudent: (studentId) => api.get(`/attendances/student/${studentId}`),
+  getByStudent: (studentId, startDate, endDate) => {
+    const params = new URLSearchParams();
+    if (startDate) params.append('startDate', startDate);
+    if (endDate) params.append('endDate', endDate);
+    return api.get(`/attendances/student/${studentId}?${params.toString()}`);
+  },
+  getSummary: (startDate, endDate) => 
+    api.get(`/attendances/summary?startDate=${startDate}&endDate=${endDate}`),
   create: (data) => api.post('/attendances', data),
+  upsert: (data) => api.post('/attendances/upsert', data),
   update: (id, data) => api.put(`/attendances/${id}`, data),
   delete: (id) => api.delete(`/attendances/${id}`),
 };
-
 export default api;
