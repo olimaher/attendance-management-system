@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { attendanceService, studentService } from '../services/api'
-import { Calendar, TrendingUp, Users, AlertCircle } from 'lucide-react'
+import { Calendar, TrendingUp, Users, AlertCircle, Download } from 'lucide-react'
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { format, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns'
 import { es } from 'date-fns/locale'
@@ -188,6 +188,42 @@ function Reports() {
         const dateB = new Date(b.date)
         return dateB - dateA
       })
+  }
+
+  const exportToCSV = () => {
+    // Preparar datos
+    const csvData = []
+
+    // Header
+    csvData.push(['Estudiante', 'Grado', 'Fecha', 'Notas'])
+
+    // Filas
+    getAbsentStudents().forEach(absence => {
+      csvData.push([
+        absence.student.name,
+        absence.student.grade.name,
+        format(new Date(absence.date.split('T')[0] + 'T00:00:00'), "dd/MM/yyyy"),
+        absence.notes || ''
+      ])
+    })
+
+    // Convertir a CSV
+    const csvContent = csvData.map(row =>
+      row.map(cell => `"${cell}"`).join(',')
+    ).join('\n')
+
+    // Descargar
+    const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(blob)
+
+    link.setAttribute('href', url)
+    link.setAttribute('download', `reporte_ausencias_${format(new Date(), 'yyyy-MM-dd')}.csv`)
+    link.style.visibility = 'hidden'
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   const handleSearch = () => {
@@ -419,9 +455,20 @@ function Reports() {
           <h3 className="text-lg font-semibold text-gray-900">
             Estudiantes Ausentes en el Período
           </h3>
-          <span className="text-sm text-gray-600">
-            {getAbsentStudents().length} estudiante(s)
-          </span>
+          <div className="flex items-center space-x-3">
+            <span className="text-sm text-gray-600">
+              {getAbsentStudents().length} estudiante(s)
+            </span>
+            {getAbsentStudents().length > 0 && (
+              <button
+                onClick={exportToCSV}
+                className="btn-success flex items-center space-x-2 text-sm"
+              >
+                <Download size={16} />
+                <span>Exportar CSV</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {getAbsentStudents().length === 0 ? (

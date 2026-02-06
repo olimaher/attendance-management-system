@@ -149,7 +149,7 @@ function Dashboard() {
             </div>
           </Link>
 
-          <div className="flex items-center space-x-3 p-4 border-2 border-yellow-200 bg-yellow-50 rounded-lg">
+          {/* <div className="flex items-center space-x-3 p-4 border-2 border-yellow-200 bg-yellow-50 rounded-lg">
             <AlertCircle className="text-yellow-600" size={24} />
             <div>
               <p className="font-semibold text-gray-900">Alertas</p>
@@ -157,7 +157,7 @@ function Dashboard() {
                 0 estudiantes con ausencias recurrentes
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
