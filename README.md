@@ -1,15 +1,42 @@
-# 📚 Sistema de Gestión de Asistencia Estudiantil
+# 🎓 Sistema de Gestión de Asistencia Estudiantil
 
-Sistema modular para el registro y seguimiento de asistencia de estudiantes de 4to y 5to grado.
+Sistema modular completo para el registro y seguimiento de asistencia de estudiantes de educación básica primaria.
 
-## 🚀 Características
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Node](https://img.shields.io/badge/node-20.x-green.svg)
+![React](https://img.shields.io/badge/react-18.x-blue.svg)
+![Docker](https://img.shields.io/badge/docker-ready-brightgreen.svg)
 
-- ✅ Registro rápido de asistencia diaria
-- 📊 Reportes semanales y mensuales
-- 🔔 Alertas automáticas por ausencias recurrentes
-- 📈 Visualización de datos con gráficos
-- 🔄 Edición de registros de asistencia
-- 💾 Exportación de datos
+---
+
+## ✨ Características Principales
+
+- ✅ **Dashboard Interactivo** con estadísticas en tiempo real
+- 👥 **Gestión de Estudiantes** (CRUD completo con 7 grados: Jardín a Quinto)
+- 📝 **Toma Rápida de Asistencia** con avance automático
+- 📊 **Reportes Completos:**
+  - Gráficos de asistencia por grado
+  - Alertas semanales (2+ ausencias por semana)
+  - Alertas mensuales (3+ ausencias por mes)
+  - Exportación a CSV
+- 💾 **Persistencia de Datos** con Docker Volumes
+- 🚀 **100% Dockerizado** - Funciona en cualquier PC
+
+---
+
+## 🚀 Instalación Rápida
+
+Ver [INSTALL.md](INSTALL.md) para instrucciones completas.
+```bash
+git clone https://github.com/TU-USUARIO/attendance-management-system.git
+cd attendance-management-system
+chmod +x start.sh
+./start.sh
+```
+
+Accede a: http://localhost:3000
+
+---
 
 ## 🛠️ Stack Tecnológico
 
@@ -94,7 +121,7 @@ MIT License
 
 ## 👨‍💻 Autor
 
-[Tu Nombre] - [Tu GitHub]
+[Olimpo Macea] - [https://github.com/olimpoMacea/attendance-management-system.git]
 
 ---
 
